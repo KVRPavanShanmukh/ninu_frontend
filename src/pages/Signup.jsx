@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { API_BASE_URL } from "./config"; //no error occured so far.
 
 function Signup({ setUser }) {
   const [form, setForm] = useState({
@@ -26,9 +25,7 @@ function Signup({ setUser }) {
     }
     return age;
   };
-
-  export const API_BASE_URL = window.location.hostname === "localhost" ? "http://localhost:30083" : "http://backend:1014";
-  
+    
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -49,7 +46,7 @@ function Signup({ setUser }) {
     if (age < 18) return setError('You must be 18 or older to register');
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/auth/signup`, { ...form, age});
+      const response = await axios.post(`http://localhost:30083/api/auth/signup`, { ...form, age});
 
       console.log('Signup successful:', response.data);
 
