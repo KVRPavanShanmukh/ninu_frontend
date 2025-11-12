@@ -26,6 +26,10 @@ function Signup({ setUser }) {
     return age;
   };
 
+  
+  const API_BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:1014' : 'http://backend:1014';
+
+  
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -41,14 +45,12 @@ function Signup({ setUser }) {
     if (!dob) return setError('Date of birth is required');
     if (!password.trim()) return setError('Password is required');
 
+    
     const age = calculateAge(dob);
     if (age < 18) return setError('You must be 18 or older to register');
 
     try {
-      const response = await axios.post('http://backend:1014/api/auth/signup', {
-        ...form,
-        age,
-      });
+      const response = await axios.post(`${API_BASE_URL}/api/auth/signup`, { ...form, age });
 
       console.log('Signup successful:', response.data);
 
